@@ -1,0 +1,45 @@
+[
+  {
+  "intent": "greeting",
+  "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening", 
+               "What's up", "How are you", "Howdy", "Greetings", 
+               "Hi there", "Hello there", "Hey there"],
+  "responses": ["Hello! How can I help you today?", "Hi there! What can I do for you?", "Hey! How's it going?"]
+  }
+  ,
+  {
+    "intent": "goodbye",
+    "patterns": ["Bye", "Goodbye", "See you later", "Catch you later", "Talk to you soon"],
+    "responses": ["Goodbye! Have a great day!", "See you later!", "Take care!"]
+  },
+  {
+    "intent": "thanks",
+    "patterns": ["Thanks", "Thank you", "Appreciate it", "Many thanks", "Thanks a lot"],
+    "responses": ["You're welcome!", "No problem at all.", "Happy to help!"]
+  },
+  {
+    "intent": "admission_deadline",
+    "patterns": ["When is the application deadline?", "Deadline for applying?", "What is the last date to submit applications?"],
+    "responses": ["The application deadline is June 30th.", "You need to apply before June 30th."]
+  },
+  {
+    "intent": "course_offered",
+    "patterns": ["What courses are offered?", "Which programs are available?", "Tell me about the courses"],
+    "responses": ["We offer programs in Computer Science, Business, and Engineering.", "Our institution provides courses in CS, Business, and Engineering."]
+  },
+  {
+    "intent": "contact_info",
+    "patterns": ["How can I contact the university?", "What is the contact number?", "How do I reach support?"],
+    "responses": ["You can email us at support@university.com or call +1-234-567-8900."]
+  },
+  {
+    "intent": "tuition_fees",
+    "patterns": ["How much are the tuition fees?", "What is the cost of study?", "Tell me about the fees"],
+    "responses": ["The tuition fee is $5000 per semester.", "It costs $5000 per semester to study here."]
+  },
+  {
+    "intent": "fallback",
+    "patterns": [],
+    "responses": ["I'm sorry, I didn't understand that. Could you rephrase?", "Hmm, I'm not sure I follow. Could you clarify?"]
+  }
+]

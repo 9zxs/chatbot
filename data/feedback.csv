@@ -1,0 +1,12 @@
+user_input,predicted_intent,response,feedback
+Hello,greeting,0.82,Hi there! What can I do for you?,yes
+Hello,greeting,0.82,Hi there! What can I do for you?,yes
+hi,greeting,0.4488222939058768,Hi there! What can I do for you?,yes
+hi,greeting,Hi there! What can I do for you?,no
+hi,greeting,Hi there! What can I do for you?,yes
+what is the fees of computer science,tuition_fees,It costs $5000 per semester to study here.,yes
+what is the fees of computer science,tuition_fees,It costs $5000 per semester to study here.,yes
+hi,greeting,Hi there! What can I do for you?,yes
+hi,greeting,Hello! How can I help you today?,no
+hi,greeting,Hello! How can I help you today?,yes
+hi,greeting,Hi there! What can I do for you?,yes

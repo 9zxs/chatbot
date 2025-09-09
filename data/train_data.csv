@@ -1,0 +1,127 @@
+text,intent
+"When is the application deadline?",admission_deadline
+"What's the deadline to apply?",admission_deadline
+"What's the last day to submit application?",admission_deadline
+"Application submission last date?",admission_deadline
+"Until when can I apply?",admission_deadline
+"Deadline for applications?",admission_deadline
+"When should I submit my application?",admission_deadline
+"Is there a cutoff date for admission?",admission_deadline
+"Can I still apply after June?",admission_deadline
+"Final date to send application?",admission_deadline
+"By what date must I apply?",admission_deadline
+"Is the application window still open?",admission_deadline
+"What's the final deadline for forms?",admission_deadline
+"Could you tell me the last date to apply?",admission_deadline
+"Up to when are applications accepted?",admission_deadline
+"Am I too late to apply?",admission_deadline
+"Deadline for submitting forms?",admission_deadline
+"When do applications close?",admission_deadline
+"Is there a late deadline?",admission_deadline
+"Tell me the admission deadline",admission_deadline
+
+"How much is the tuition fee?",tuition_fees
+"tuition fees",tuition_fees
+"How much do I need to pay per semester?",tuition_fees
+"What's the cost of studying?",tuition_fees
+"Fees for one semester?",tuition_fees
+"How expensive is tuition?",tuition_fees
+"Tell me about the course fees",tuition_fees
+"What's the price of tuition?",tuition_fees
+"Give me the tuition cost",tuition_fees
+"How much should I budget for tuition?",tuition_fees
+"What's the tuition per year?",tuition_fees
+"Is tuition high?",tuition_fees
+"Can you share the fee structure?",tuition_fees
+"How much does the program cost?",tuition_fees
+"Any scholarships to reduce tuition?",tuition_fees
+"Price per semester?",tuition_fees
+"Could you tell me the tuition?",tuition_fees
+"How many dollars per term?",tuition_fees
+"Is there a tuition chart?",tuition_fees
+"Do I need to pay fees upfront?",tuition_fees
+
+"What courses are available?",courses_offered
+"Do you offer data science?",courses_offered
+"Which programs are available?",courses_offered
+"Tell me about the programs",courses_offered
+"What courses do you have?",courses_offered
+"List the available degrees",courses_offered
+"Programs in engineering?",courses_offered
+"Do you provide computer science?",courses_offered
+"Offerings in business?",courses_offered
+"Which academic courses are offered?",courses_offered
+"What subjects can I study here?",courses_offered
+"Can you share the programs?",courses_offered
+"Tell me the list of courses",courses_offered
+"Do you provide IT programs?",courses_offered
+"Is business administration available?",courses_offered
+"What are the study options?",courses_offered
+"Do you have masters courses?",courses_offered
+"Are bachelor programs offered?",courses_offered
+"Any postgraduate courses?",courses_offered
+"Which majors are provided?",courses_offered
+
+"hello",greeting
+"hi there",greeting
+"hey",greeting
+"good morning",greeting
+"good evening",greeting
+"what's up",greeting
+"howdy",greeting
+"hi",greeting
+"hi, how are you?",greeting
+"greetings",greeting
+"hello there",greeting
+"hey there",greeting
+"hiya!",greeting
+"yo!",greeting
+"hi friend",greeting
+"morning!",greeting
+"evening!",greeting
+"hi buddy",greeting
+"hey man",greeting
+"sup?",greeting
+"long time no see",greeting
+
+"Thanks",thanks
+"Thank you",thanks
+"Thanks a lot",thanks
+"Many thanks",thanks
+"Appreciate it",thanks
+"Thanks for your help",thanks
+"Thank you very much",thanks
+"Thanks a ton",thanks
+"Thanks so much",thanks
+"Thanks buddy",thanks
+"Cheers!",thanks
+"Thanks for assisting",thanks
+"Grateful for your help",thanks
+"Much appreciated",thanks
+"Thanks again",thanks
+"Thanks a bunch",thanks
+"Thank you kindly",thanks
+"I really appreciate it",thanks
+"Thanks heaps",thanks
+"Big thanks",thanks
+
+"Bye",goodbye
+"Goodbye",goodbye
+"See you later",goodbye
+"Catch you later",goodbye
+"Talk to you soon",goodbye
+"See ya",goodbye
+"Bye bye",goodbye
+"Take care",goodbye
+"Farewell",goodbye
+"Catch you soon",goodbye
+"Talk later",goodbye
+"See you tomorrow",goodbye
+"See you around",goodbye
+"Gotta go, bye",goodbye
+"Until next time",goodbye
+"Later!",goodbye
+"See you shortly",goodbye
+"I'm off, bye",goodbye
+"Catch you later on",goodbye
+"Peace out",goodbye
