@@ -344,4 +344,110 @@ with col2:
     if st.session_state.messages:
         latest_idx = len(st.session_state.messages) - 1
         if latest_idx not in st.session_state.feedback_given:
-            col_feedback1, col_feedback2, col_feedback3 = st.columns([6,
+            col_feedback1, col_feedback2, col_feedback3 = st.columns([6, 1, 1])
+            
+            with col_feedback2:
+                if st.button("👍 Yes", key=f"helpful_{latest_idx}", help="This response was helpful"):
+                    save_feedback(
+                        st.session_state.messages[latest_idx]["user"],
+                        st.session_state.messages[latest_idx]["intent"],
+                        st.session_state.messages[latest_idx]["bot"],
+                        "helpful"
+                    )
+                    st.session_state.feedback_given.add(latest_idx)
+                    st.success("Thank you for your feedback! 😊", icon="✅")
+                    st.rerun()
+            
+            with col_feedback3:
+                if st.button("👎 No", key=f"not_helpful_{latest_idx}", help="This response was not helpful"):
+                    save_feedback(
+                        st.session_state.messages[latest_idx]["user"],
+                        st.session_state.messages[latest_idx]["intent"],
+                        st.session_state.messages[latest_idx]["bot"],
+                        "not_helpful"
+                    )
+                    st.session_state.feedback_given.add(latest_idx)
+                    st.info("Thanks for letting us know. We'll work on improving! 🔧", icon="💡")
+                    st.rerun()
+
+    # Input area
+    st.markdown('<div class="input-container">', unsafe_allow_html=True)
+    
+    # Quick suggestions (only show when chat is empty)
+    if not st.session_state.messages:
+        st.markdown("**💡 Quick suggestions:**")
+        suggestions = [
+            "What are the admission requirements?",
+            "Tell me about tuition fees",
+            "What courses do you offer?",
+            "How do I apply?",
+            "Campus facilities"
+        ]
+        
+        cols = st.columns(len(suggestions))
+        for i, suggestion in enumerate(suggestions):
+            with cols[i]:
+                if st.button(suggestion, key=f"suggestion_{i}", help=f"Ask: {suggestion}"):
+                    # Process the suggestion as user input
+                    response, intent = get_bot_response(suggestion)
+                    st.session_state.messages.append({
+                        "user": suggestion,
+                        "bot": response,
+                        "intent": intent
+                    })
+                    st.rerun()
+    
+    # Text input and send button
+    user_input_col, send_col = st.columns([8, 1])
+    
+    with user_input_col:
+        user_input = st.text_input(
+            "",
+            placeholder="Type your question here... 💭",
+            label_visibility="collapsed",
+            key="user_input"
+        )
+    
+    with send_col:
+        send_button = st.button("Send", type="primary", use_container_width=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+    
+    # Process user input
+    if (send_button or user_input) and user_input and user_input.strip():
+        if user_input.strip():
+            # Get bot response
+            response, intent = get_bot_response(user_input.strip())
+            
+            # Add to session history
+            st.session_state.messages.append({
+                "user": user_input.strip(),
+                "bot": response,
+                "intent": intent
+            })
+            
+            # Clear input and rerun
+            st.rerun()
+
+# ========================
+# Sidebar with Statistics
+# ========================
+with st.sidebar:
+    st.markdown("### 📊 Chat Statistics")
+    st.metric("Messages Sent", len(st.session_state.messages))
+    
+    if st.session_state.messages:
+        intents_used = [msg["intent"] for msg in st.session_state.messages]
+        unique_intents = len(set(intents_used))
+        st.metric("Topics Discussed", unique_intents)
+    
+    st.markdown("---")
+    
+    if st.button("🗑️ Clear Chat", help="Clear all messages"):
+        st.session_state.messages = []
+        st.session_state.feedback_given = set()
+        st.rerun()
+    
+    st.markdown("---")
+    st.markdown("### ℹ️ About")
+    st.markdown("This AI assistant helps with university-related queries using machine learning to understand your questions and provide relevant responses.")
