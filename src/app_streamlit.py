@@ -470,7 +470,7 @@ if st.session_state.messages:
         # User bubble
         chat_html += f'<div class="user-message">👤 {chat["user"]}</div>'
 
-        # Bot bubble with metadata + feedback container
+        # Bot bubble
         confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
         chat_html += f"""
         <div class="bot-message">
@@ -479,37 +479,27 @@ if st.session_state.messages:
                 🎯 <strong>Intent:</strong> {chat['intent']} | 
                 {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
             </div>
-            <div class="feedback-container">
-                <form action="" method="post">
-                    <button class="feedback-btn positive" type="submit" name="feedback" value="yes_{idx}">👍 Helpful</button>
-                    <button class="feedback-btn negative" type="submit" name="feedback" value="no_{idx}">👎 Not Helpful</button>
-                </form>
-            </div>
         </div>
         """
 
+        # Render feedback row (buttons under each bot reply)
+        col1, col2, col3 = st.columns([1, 1, 4])
+        with col1:
+            if st.button("👍 Helpful", key=f"yes_{idx}", use_container_width=True):
+                with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "yes"])
+                st.success("✅ Thanks for your feedback!")
+        with col2:
+            if st.button("👎 Not Helpful", key=f"no_{idx}", use_container_width=True):
+                with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
+                st.error("📝 Feedback recorded. We'll improve!")
+
     chat_html += "</div>"
+
     st.markdown(chat_html, unsafe_allow_html=True)
-
-    # Handle feedback clicks
-    if "feedback" not in st.session_state:
-        st.session_state.feedback = None
-
-    feedback = st.query_params.get("feedback")
-    if feedback:
-        idx = int(feedback.split("_")[1])
-        label = "yes" if feedback.startswith("yes") else "no"
-        chat = st.session_state.messages[idx]
-
-        # Save feedback
-        with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], label])
-
-        if label == "yes":
-            st.success("✅ Thanks for your feedback!")
-        else:
-            st.error("📝 Feedback recorded. We'll improve!")
 
     # Clear chat button
     if st.button("🗑️ Clear Chat History"):
@@ -764,10 +754,4 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
-
-
-
-
-
-
 
