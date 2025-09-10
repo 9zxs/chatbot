@@ -464,36 +464,35 @@ with tab1:
 # Display conversation
 # ========================
 if st.session_state.messages:
-    # Prepare HTML for scrollable chat container
+    # Build HTML for the entire chat container
     chat_html = '<div class="chat-container">'
     
     for idx, chat in enumerate(st.session_state.messages):
         # User message
         chat_html += f'<div class="user-message">👤 {chat["user"]}</div>'
 
-        # Bot message with metadata
+        # Bot message with metadata + feedback buttons
         confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
         chat_html += f"""
-            <div class="bot-message">
-                🤖 {chat['bot']}
-                <div class="metadata">
-                    🎯 <strong>Intent:</strong> {chat['intent']} | 
-                    {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
-                </div>
-
-                <div class="feedback-container">
-                    <span class="feedback-btn positive">👍 Helpful</span>
-                    <span class="feedback-btn negative">👎 Not Helpful</span>
-                </div>
+        <div class="bot-message">
+            🤖 {chat['bot']}
+            <div class="metadata">
+                🎯 <strong>Intent:</strong> {chat['intent']} | 
+                {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
             </div>
+            <div class="feedback-container">
+                <span class="feedback-btn positive">👍 Helpful</span>
+                <span class="feedback-btn negative">👎 Not Helpful</span>
+            </div>
+        </div>
         """
 
     chat_html += "</div>"
 
-    # Display scrollable chat
+    # Render all messages at once
     st.markdown(chat_html, unsafe_allow_html=True)
 
-    # Invisible Streamlit buttons to handle clicks
+    # Streamlit buttons for handling feedback clicks
     for idx, chat in enumerate(st.session_state.messages):
         col1, col2 = st.columns([1, 1])
         with col1:
@@ -522,7 +521,6 @@ else:
         <p>Ask me anything about the university and I'll do my best to help you.</p>
     </div>
     """, unsafe_allow_html=True)
-
 
 # ========================
 # Tab 2: Enhanced Analytics
@@ -762,6 +760,7 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
 
 
