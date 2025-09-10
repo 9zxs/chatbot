@@ -431,14 +431,18 @@ with tab1:
     # Process input
     if (send_button and user_input.strip()) or user_input:
         if user_input.strip():
-            # Predict intent + confidence
             try:
+                # Predict intent + confidence
                 y_pred = pipeline.predict([user_input])[0]
                 intent = le.inverse_transform([y_pred])[0]
                 proba = pipeline.predict_proba([user_input])[0]
                 confidence = float(max(proba))
                 
-                response = random.choice(intent_to_responses.get(intent, ["I'm sorry, I didn't quite understand that. Could you please rephrase your question?"]))
+                response = random.choice(
+                    intent_to_responses.get(intent, [
+                        "I'm sorry, I didn't quite understand that. Could you please rephrase your question?"
+                    ])
+                )
                 
                 # Add to session history
                 st.session_state.messages.append({
@@ -448,61 +452,60 @@ with tab1:
                     "confidence": confidence
                 })
                 
-                # Clear input
+                # Clear input and rerun
                 st.session_state.user_input = ""
                 st.rerun()
-                
             except Exception as e:
                 st.error(f"Error processing your message: {str(e)}")
     
+    # ========================
     # Display conversation
+    # ========================
     if st.session_state.messages:
-    chat_html = '<div class="chat-container">'
-    
-    for idx, chat in enumerate(st.session_state.messages):
-        # User message
-        chat_html += f"""
-        <div class="user-message">
-            👤 {chat['user']}
-        </div>
-        """
+        chat_html = '<div class="chat-container">'
         
-        # Bot message with metadata
-        confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
-        chat_html += f"""
-        <div class="bot-message">
-            🤖 {chat['bot']}
-            <div class="metadata">
-                🎯 <strong>Intent:</strong> {chat['intent']} | 
-                {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
+        for idx, chat in enumerate(st.session_state.messages):
+            # User message
+            chat_html += f"""
+            <div class="user-message">
+                👤 {chat['user']}
             </div>
-        </div>
-        """
-    
-    chat_html += "</div>"
-    
-    # Render all at once
-    st.markdown(chat_html, unsafe_allow_html=True)
-
+            """
             
-            # Feedback buttons
-            col1, col2, col3 = st.columns([1, 1, 4])
-            
-            with col1:
-                if st.button("👍 Helpful", key=f"yes_{idx}", use_container_width=True):
-                    with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
-                        writer = csv.writer(f)
-                        writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "yes"])
-                    st.success("✅ Thanks for your feedback!")
-                    
-            with col2:
-                if st.button("👎 Not Helpful", key=f"no_{idx}", use_container_width=True):
-                    with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
-                        writer = csv.writer(f)
-                        writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
-                    st.error("📝 Feedback recorded. We'll improve!")
+            # Bot message with metadata
+            confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
+            chat_html += f"""
+            <div class="bot-message">
+                🤖 {chat['bot']}
+                <div class="metadata">
+                    🎯 <strong>Intent:</strong> {chat['intent']} | 
+                    {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
+                </div>
+            </div>
+            """
         
-        st.markdown('</div>', unsafe_allow_html=True)
+        chat_html += "</div>"
+        
+        # Render all messages inside chat container
+        st.markdown(chat_html, unsafe_allow_html=True)
+        
+        # Feedback buttons for the last bot reply
+        last_chat = st.session_state.messages[-1]
+        col1, col2, col3 = st.columns([1, 1, 4])
+        
+        with col1:
+            if st.button("👍 Helpful", key=f"yes_{len(st.session_state.messages)}", use_container_width=True):
+                with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([last_chat["user"], last_chat["intent"], f"{last_chat['confidence']:.2f}", last_chat["bot"], "yes"])
+                st.success("✅ Thanks for your feedback!")
+                
+        with col2:
+            if st.button("👎 Not Helpful", key=f"no_{len(st.session_state.messages)}", use_container_width=True):
+                with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
+                    writer = csv.writer(f)
+                    writer.writerow([last_chat["user"], last_chat["intent"], f"{last_chat['confidence']:.2f}", last_chat["bot"], "no"])
+                st.error("📝 Feedback recorded. We'll improve!")
         
         # Clear chat button
         if st.button("🗑️ Clear Chat History"):
@@ -516,6 +519,7 @@ with tab1:
             <p>Ask me anything about the university and I'll do my best to help you.</p>
         </div>
         """, unsafe_allow_html=True)
+
 
 # ========================
 # Tab 2: Enhanced Analytics
@@ -755,4 +759,5 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
