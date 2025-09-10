@@ -464,27 +464,38 @@ with tab1:
 # Display conversation
 # ========================
 if st.session_state.messages:
-    # Use container to keep chat scrollable
-    chat_container = st.container()
-
+    # Prepare HTML for scrollable chat container
+    chat_html = '<div class="chat-container">'
+    
     for idx, chat in enumerate(st.session_state.messages):
-        # Display user message
-        chat_container.markdown(f'<div class="user-message">👤 {chat["user"]}</div>', unsafe_allow_html=True)
+        # User message
+        chat_html += f'<div class="user-message">👤 {chat["user"]}</div>'
 
-        # Display bot message with metadata
+        # Bot message with metadata
         confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
-        chat_container.markdown(f"""
+        chat_html += f"""
             <div class="bot-message">
                 🤖 {chat['bot']}
                 <div class="metadata">
                     🎯 <strong>Intent:</strong> {chat['intent']} | 
                     {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
                 </div>
-            </div>
-        """, unsafe_allow_html=True)
 
-        # Feedback buttons inside the scrollable container
-        col1, col2 = chat_container.columns([1, 1])
+                <div class="feedback-container">
+                    <span class="feedback-btn positive">👍 Helpful</span>
+                    <span class="feedback-btn negative">👎 Not Helpful</span>
+                </div>
+            </div>
+        """
+
+    chat_html += "</div>"
+
+    # Display scrollable chat
+    st.markdown(chat_html, unsafe_allow_html=True)
+
+    # Invisible Streamlit buttons to handle clicks
+    for idx, chat in enumerate(st.session_state.messages):
+        col1, col2 = st.columns([1, 1])
         with col1:
             if st.button("👍 Helpful", key=f"yes_{idx}"):
                 with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
@@ -751,6 +762,7 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
 
 
