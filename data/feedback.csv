@@ -5,5 +5,10 @@ hi,greeting,0.4488222939058768,Hi there! What can I do for you?,yes
 When is the application deadline?,admission_deadline,0.86,You need to apply before June 30th.,yes
 How much does the program cost per semester?,tuition_fees,0.71,The tuition fee is $5000 per semester.,yes
 tuition,tuition_fees,0.87,The tuition fee is $5000 per semester.,yes
+When is the application deadline?,admission_deadline,0.86,The application deadline is June 30th.,yes
+When is the application deadline?,admission_deadline,0.86,The application deadline is June 30th.,no
+Hello,greeting,0.44,Hey! How's it going?,no
+What courses are available?,courses_offered,0.82,Sorry, I didn't understand that.,no
+s,greeting,0.21,Hello! How can I help you today?,no
 
 
