@@ -28,7 +28,7 @@ def load_and_train():
     le = LabelEncoder()
     df["label"] = le.fit_transform(df["intent"])
 
-    # Split (train/test not really used here, but good practice)
+    # Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
         df["text"], df["label"], test_size=0.2, random_state=42
     )
@@ -39,25 +39,30 @@ def load_and_train():
         ("clf", LogisticRegression(max_iter=1000))
     ])
 
-    # Train model
+    # Train
     pipeline.fit(X_train, y_train)
 
-    return pipeline, le
+    # Accuracy scores
+    train_acc = pipeline.score(X_train, y_train)
+    test_acc = pipeline.score(X_test, y_test)
 
-pipeline, le = load_and_train()
+    return pipeline, le, train_acc, test_acc
 
-# Load intents.json
-with open("data/intents.json", encoding="utf-8") as f:
-    intents = json.load(f)
+pipeline, le, train_acc, test_acc = load_and_train()
 
-intent_to_responses = {item["intent"]: item["responses"] for item in intents}
+# ========================
+# Sidebar info panel
+# ========================
+st.sidebar.title("📊 Chatbot Info")
+st.sidebar.write(f"✅ Training Accuracy: **{train_acc:.2f}**")
+st.sidebar.write(f"✅ Testing Accuracy: **{test_acc:.2f}**")
 
-# Feedback file
-FEEDBACK_FILE = "data/feedback.csv"
-if not os.path.exists(FEEDBACK_FILE):
-    with open(FEEDBACK_FILE, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["user_input", "predicted_intent", "response", "feedback"])
+# Feedback count
+if os.path.exists(FEEDBACK_FILE):
+    feedback_df = pd.read_csv(FEEDBACK_FILE)
+    st.sidebar.write(f"📝 Feedback Collected: **{len(feedback_df)}** entries")
+else:
+    st.sidebar.write("📝 Feedback Collected: **0** entries")
 
 # ========================
 # Custom CSS
@@ -171,3 +176,4 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
