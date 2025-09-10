@@ -508,7 +508,12 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("### ℹ️ About")
-    st.markdown("This AI assistant helps with university-related queries using machine learning to understand your questions and provide relevant responses.")        background-color: #DCF8C6;
+    st.markdown("This AI assistant helps with university-related queries using machine learning to understand your questions and provide relevant responses.")  
+    
+    st.markdown("""
+    <style>
+    .user-bubble {    
+        background-color: #DCF8C6;
         padding: 10px;
         border-radius: 15px;
         margin: 5px 0;
@@ -593,3 +598,4 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
