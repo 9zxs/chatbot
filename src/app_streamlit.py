@@ -460,7 +460,6 @@ with tab1:
             </div>
             """, unsafe_allow_html=True)
             
-            st.markdown('</div>', unsafe_allow_html=True)
             # Feedback buttons
             col1, col2, col3 = st.columns([1, 1, 4])
             
@@ -478,7 +477,7 @@ with tab1:
                         writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
                     st.error("📝 Feedback recorded. We'll improve!")
         
-        
+        st.markdown('</div>', unsafe_allow_html=True)
         
         # Clear chat button
         if st.button("🗑️ Clear Chat History"):
