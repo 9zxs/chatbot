@@ -370,127 +370,82 @@ tab1, tab2, tab3, tab4 = st.tabs(["💬 Chat", "📊 Analytics", "📥 Feedback 
 # Tab 1: Enhanced Chatbot
 # ========================
 with tab1:
+    st.title("🎓 University Chatbot")
+
     if not model_loaded:
-        st.error("🚫 Chatbot is currently unavailable due to model loading issues.")
+        st.error("🚫 Chatbot unavailable due to model issues.")
         st.stop()
-    
-    # Keep chat history
+
     if "messages" not in st.session_state:
         st.session_state.messages = []
-    
-    # Chat interface
+
     col1, col2 = st.columns([4, 1])
-    
     with col1:
-        user_input = st.text_input(
-            "Message", 
-            placeholder="Ask me anything about the university...",
-            key="user_input",
-            label_visibility="collapsed"
-        )
-    
+        user_input = st.text_input("Message", key="user_input", placeholder="Type here...")
     with col2:
         send_button = st.button("Send 🚀", use_container_width=True)
-    
-    # Quick suggestions
-    st.markdown("**💡 Quick suggestions:**")
-    suggestion_cols = st.columns(4)
-    suggestions = [
-        "Admission requirements",
-        "Tuition fees",
-        "Available courses", 
-        "Campus facilities"
-    ]
-    
-    for i, suggestion in enumerate(suggestions):
-        with suggestion_cols[i]:
-            if st.button(suggestion, key=f"suggestion_{i}", use_container_width=True):
-                user_input = suggestion
+
+    # Quick questions
+    st.write("💡 Quick questions:")
+    quick_cols = st.columns(4)
+    quick_qs = ["Admission deadline", "Tuition fees", "Available courses", "Scholarships"]
+    for i, q in enumerate(quick_qs):
+        with quick_cols[i]:
+            if st.button(q, key=f"quick_{i}", use_container_width=True):
+                user_input = q
                 send_button = True
-    
-    # Process input
-    if (send_button and user_input.strip()) or user_input:
-        if user_input.strip():
-            # Predict intent + confidence
-            try:
-                y_pred = pipeline.predict([user_input])[0]
-                intent = le.inverse_transform([y_pred])[0]
-                proba = pipeline.predict_proba([user_input])[0]
-                confidence = float(max(proba))
-                
-                response = random.choice(intent_to_responses.get(intent, ["I'm sorry, I didn't quite understand that. Could you please rephrase your question?"]))
-                
-                # Add to session history
-                st.session_state.messages.append({
-                    "user": user_input, 
-                    "bot": response, 
-                    "intent": intent, 
-                    "confidence": confidence
-                })
-                
-                # Clear input
-                st.session_state.user_input = ""
-                st.rerun()
-                
-            except Exception as e:
-                st.error(f"Error processing your message: {str(e)}")
-    
-    # Display conversation
+
+    if send_button and user_input.strip():
+        y_pred = pipeline.predict([user_input])[0]
+        intent = le.inverse_transform([y_pred])[0]
+        proba = pipeline.predict_proba([user_input])[0]
+        confidence = float(max(proba))
+
+        response = random.choice(intent_to_responses.get(intent, ["Sorry, I don't understand."]))
+        st.session_state.messages.append({
+            "user": user_input,
+            "bot": response,
+            "intent": intent,
+            "confidence": confidence
+        })
+        st.session_state.user_input = ""
+        st.rerun()
+
+    # Conversation box with scrollbar
     if st.session_state.messages:
-        st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-        
+        chat_html = '<div class="chat-container">'
         for idx, chat in enumerate(st.session_state.messages):
-            # User message
-            st.markdown(f"""
-            <div class="user-message">
-                👤 {chat['user']}
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Bot message with metadata
-            confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
-            
-            st.markdown(f"""
+            chat_html += f"""
+            <div class="user-message">👤 {chat['user']}</div>
             <div class="bot-message">
                 🤖 {chat['bot']}
                 <div class="metadata">
-                    🎯 <strong>Intent:</strong> {chat['intent']} | 
-                    {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
+                    🎯 Intent: {chat['intent']} | 📈 Confidence: {chat['confidence']:.2f}
                 </div>
             </div>
-            """, unsafe_allow_html=True)
-            
+            """
             # Feedback buttons
-            col1, col2, col3 = st.columns([1, 1, 4])
-            
+            col1, col2 = st.columns(2)
             with col1:
-                if st.button("👍 Helpful", key=f"yes_{idx}", use_container_width=True):
+                if st.button("👍 Helpful", key=f"yes_{idx}"):
                     with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                         writer = csv.writer(f)
                         writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "yes"])
-                    st.success("✅ Thanks for your feedback!")
-                    
+                    st.success("Feedback recorded ✅")
             with col2:
-                if st.button("👎 Not Helpful", key=f"no_{idx}", use_container_width=True):
+                if st.button("👎 Not Helpful", key=f"no_{idx}"):
                     with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                         writer = csv.writer(f)
                         writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
-                    st.error("📝 Feedback recorded. We'll improve!")
-        
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-        # Clear chat button
+                    st.error("Feedback recorded ❌")
+        chat_html += '</div>'
+        st.markdown(chat_html, unsafe_allow_html=True)
+
         if st.button("🗑️ Clear Chat History"):
             st.session_state.messages = []
             st.rerun()
     else:
-        st.markdown("""
-        <div class="empty-state">
-            <div class="empty-state-icon">💬</div>
-            <h3>Start a conversation!</h3>
-            <p>Ask me anything about the university and I'll do my best to help you.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.info("💬 Start a conversation!")
 
 # ========================
 # Tab 2: Enhanced Analytics
@@ -730,3 +685,4 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
