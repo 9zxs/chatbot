@@ -28,26 +28,22 @@ INTENTS_FILE = "data/intents.json"
 # ========================
 @st.cache_resource
 def retrain_model():
-    # Load original training data
-    df = pd.read_csv(TRAIN_FILE)
-
-    # Merge feedback if exists
-    if os.path.exists(FEEDBACK_FILE):
-        fb_df = pd.read_csv(FEEDBACK_FILE)
-        fb_df = fb_df.rename(columns={
-            "user_input": "text",
-            "predicted_intent": "intent"
-        })
-        fb_df = fb_df[["text", "intent"]]
-        df = pd.concat([df, fb_df], ignore_index=True)
+    # Load dataset
+    df = pd.read_csv("data/train_data.csv")
 
     # Encode labels
     le = LabelEncoder()
     df["label"] = le.fit_transform(df["intent"])
 
+    # ✅ Safe stratify check
+    if df["label"].value_counts().min() > 1:
+        stratify = df["label"]
+    else:
+        stratify = None
+
     # Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
-        df["text"], df["label"], test_size=0.2, random_state=42, stratify=df["label"]
+        df["text"], df["label"], test_size=0.2, random_state=42, stratify=stratify
     )
 
     # Build pipeline
@@ -64,8 +60,6 @@ def retrain_model():
     test_acc = pipeline.score(X_test, y_test)
 
     return pipeline, le, train_acc, test_acc
-
-pipeline, le, train_acc, test_acc = retrain_model()
 
 # ========================
 # Load intents
@@ -213,3 +207,4 @@ with tab3:
         )
     else:
         st.info("No feedback data available yet.")
+
