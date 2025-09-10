@@ -1,33 +1,63 @@
 import streamlit as st
+import pandas as pd
 import joblib
 import random
 import json
 import csv
 import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
 # ========================
-# Load model and data
+# Page Config
 # ========================
-st.set_page_config(page_title="University Chatbot", page_icon="🤖")
+st.set_page_config(page_title="🎓 University Chatbot", page_icon="🤖")
 
+# ========================
+# Load dataset & train model
+# ========================
 @st.cache_resource
-def load_model():
-    model_data = joblib.load("src/model.pkl")
-    return model_data["pipeline"], model_data["label_encoder"]
+def load_and_train():
+    # Load dataset
+    df = pd.read_csv("data/train_data.csv")
 
-pipeline, le = load_model()
+    # Encode labels
+    le = LabelEncoder()
+    df["label"] = le.fit_transform(df["intent"])
 
+    # Split (train/test not really used here, but good practice)
+    X_train, X_test, y_train, y_test = train_test_split(
+        df["text"], df["label"], test_size=0.2, random_state=42
+    )
+
+    # Build pipeline
+    pipeline = Pipeline([
+        ("tfidf", TfidfVectorizer()),
+        ("clf", LogisticRegression(max_iter=1000))
+    ])
+
+    # Train model
+    pipeline.fit(X_train, y_train)
+
+    return pipeline, le
+
+pipeline, le = load_and_train()
+
+# Load intents.json
 with open("data/intents.json", encoding="utf-8") as f:
     intents = json.load(f)
 
 intent_to_responses = {item["intent"]: item["responses"] for item in intents}
-FEEDBACK_FILE = "data/feedback.csv"
 
+# Feedback file
+FEEDBACK_FILE = "data/feedback.csv"
 if not os.path.exists(FEEDBACK_FILE):
     with open(FEEDBACK_FILE, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(["user_input", "predicted_intent", "response", "feedback"])
-
 
 # ========================
 # Custom CSS
@@ -57,7 +87,7 @@ st.markdown(
         margin: 5px 0;
         text-align: left;
     }
-    /* Custom scrollbar */
+    /* Scrollbar */
     .chat-container::-webkit-scrollbar {
         width: 8px;
     }
@@ -77,7 +107,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-
 # ========================
 # Streamlit UI
 # ========================
@@ -92,20 +121,33 @@ if "messages" not in st.session_state:
 user_input = st.text_input("💬 Type your message here:")
 
 if st.button("Send") and user_input.strip():
-    # Predict intent
+    # Predict intent + confidence
+    proba = pipeline.predict_proba([user_input])[0]
     y_pred = pipeline.predict([user_input])[0]
+    confidence = max(proba)
     intent = le.inverse_transform([y_pred])[0]
 
-    response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
+    # Apply confidence threshold
+    threshold = 0.30
+    if confidence < threshold or intent not in intent_to_responses:
+        response = random.choice([
+            "Sorry, I didn't quite get that.",
+            "Can you please rephrase?",
+            "I'm not sure I understand. Could you clarify?"
+        ])
+        intent = "fallback"
+    else:
+        response = random.choice(intent_to_responses[intent])
 
-    # Add to session history
+    # Save to history
     st.session_state.messages.append(
         {"user": user_input, "bot": response, "intent": intent}
     )
 
 # ========================
-# Display conversation in scrollable box
+# Display conversation
 # ========================
+st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
 
 for idx, chat in enumerate(st.session_state.messages):
     # User bubble
@@ -113,7 +155,7 @@ for idx, chat in enumerate(st.session_state.messages):
     # Bot bubble
     st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']}</div>", unsafe_allow_html=True)
 
-    # Feedback buttons
+    # Feedback
     col1, col2 = st.columns(2)
     with col1:
         if st.button("👍 Helpful", key=f"yes_{idx}"):
