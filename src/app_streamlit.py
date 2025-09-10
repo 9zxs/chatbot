@@ -464,45 +464,43 @@ with tab1:
 # Display conversation
 # ========================
 if st.session_state.messages:
-    # Build HTML for the entire chat container
-    chat_html = '<div class="chat-container">'
+    # Use container to keep chat scrollable
+    chat_container = st.container()
     
+    # Display chat messages
     for idx, chat in enumerate(st.session_state.messages):
         # User message
-        chat_html += f'<div class="user-message">👤 {chat["user"]}</div>'
+        chat_container.markdown(
+            f'<div class="user-message">👤 {chat["user"]}</div>',
+            unsafe_allow_html=True
+        )
 
-        # Bot message with metadata + feedback buttons
+        # Bot message + metadata
         confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
-        chat_html += f"""
-        <div class="bot-message">
-            🤖 {chat['bot']}
-            <div class="metadata">
-                🎯 <strong>Intent:</strong> {chat['intent']} | 
-                {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
+        chat_container.markdown(
+            f"""
+            <div class="bot-message">
+                🤖 {chat['bot']}
+                <div class="metadata">
+                    🎯 <strong>Intent:</strong> {chat['intent']} | 
+                    {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
+                </div>
             </div>
-            <div class="feedback-container">
-                <span class="feedback-btn positive">👍 Helpful</span>
-                <span class="feedback-btn negative">👎 Not Helpful</span>
-            </div>
-        </div>
-        """
+            """,
+            unsafe_allow_html=True
+        )
 
-    chat_html += "</div>"
-
-    # Render all messages at once
-    st.markdown(chat_html, unsafe_allow_html=True)
-
-    # Streamlit buttons for handling feedback clicks
-    for idx, chat in enumerate(st.session_state.messages):
-        col1, col2 = st.columns([1, 1])
-        with col1:
-            if st.button("👍 Helpful", key=f"yes_{idx}"):
+        # Feedback buttons inside the container
+        feedback_col1, feedback_col2 = chat_container.columns([1, 1])
+        with feedback_col1:
+            if st.button("👍 Helpful", key=f"yes_{idx}", use_container_width=True):
                 with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                     writer = csv.writer(f)
                     writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "yes"])
                 st.success("✅ Thanks for your feedback!")
-        with col2:
-            if st.button("👎 Not Helpful", key=f"no_{idx}"):
+
+        with feedback_col2:
+            if st.button("👎 Not Helpful", key=f"no_{idx}", use_container_width=True):
                 with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                     writer = csv.writer(f)
                     writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
@@ -760,3 +758,4 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
