@@ -153,7 +153,6 @@ if st.button("Send") and user_input.strip():
 # ========================
 # Display conversation
 # ========================
-st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
 
 for idx, chat in enumerate(st.session_state.messages):
     # User bubble
@@ -177,5 +176,6 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
 
 
