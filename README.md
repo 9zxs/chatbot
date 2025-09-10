@@ -17,3 +17,6 @@ Send a request:
 ```bash
 curl -X POST -H "Content-Type: application/json" -d '{"text":"When is the application deadline?"}' http://localhost:5000/chat
 ```
+
+
+https://chatbot-mqpgezxnybyno2kz9per3m.streamlit.app/
