@@ -10,6 +10,9 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
+from sklearn.metrics import classification_report, confusion_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # ========================
 # Page config
@@ -115,7 +118,7 @@ st.markdown(
 # ========================
 # Tabs
 # ========================
-tab1, tab2, tab3 = st.tabs(["💬 Chatbot", "📊 Info", "📥 Feedback Data"])
+tab1, tab2, tab3, tab4 = st.tabs(["💬 Chatbot", "📊 Info", "📥 Feedback Data", "📈 Evaluation"])
 
 # ========================
 # Tab 1: Chatbot
@@ -196,4 +199,32 @@ with tab3:
         )
     else:
         st.info("No feedback data available yet.")
+
+# ------------------------
+# Tab 4: Evaluation
+# ------------------------
+with tab4:
+    st.subheader("📈 Model Evaluation")
+
+    # Retrain fresh model
+    pipeline, le, train_acc, test_acc = retrain_model()
+
+    # Reload dataset
+    df_eval = pd.read_csv(TRAIN_FILE)
+    y_true = le.transform(df_eval["intent"])
+    y_pred_all = pipeline.predict(df_eval["text"])
+
+    # Show classification report
+    report = classification_report(y_true, y_pred_all, target_names=le.classes_, output_dict=True)
+    st.write("### 📑 Classification Report")
+    st.dataframe(pd.DataFrame(report).transpose())
+
+    # Show confusion matrix
+    cm = confusion_matrix(y_true, y_pred_all)
+    fig, ax = plt.subplots(figsize=(8, 6))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", xticklabels=le.classes_, yticklabels=le.classes_, ax=ax)
+    plt.xlabel("Predicted")
+    plt.ylabel("True")
+    plt.title("Confusion Matrix")
+    st.pyplot(fig)
 
