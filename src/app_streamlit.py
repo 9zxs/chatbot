@@ -490,61 +490,7 @@ with col2:
 # ========================
 # Sidebar with Statistics (Optional)
 # ========================
-with st.sidebar:
-    st.markdown("### 📊 Chat Statistics")
-    st.metric("Messages Sent", len(st.session_state.messages))
-    
-    if st.session_state.messages:
-        intents_used = [msg["intent"] for msg in st.session_state.messages]
-        unique_intents = len(set(intents_used))
-        st.metric("Topics Discussed", unique_intents)
-    
-    st.markdown("---")
-    
-    if st.button("🗑️ Clear Chat", help="Clear all messages"):
-        st.session_state.messages = []
-        st.session_state.feedback_given = set()
-        st.rerun()
-    
-    st.markdown("---")
-    st.markdown("### ℹ️ About")
-    st.markdown("This AI assistant helps with university-related queries using machine learning to understand your questions and provide relevant responses.")  
-    
-    st.markdown("""
-    <style>
-    .user-bubble {    
-        background-color: #DCF8C6;
-        padding: 10px;
-        border-radius: 15px;
-        margin: 5px 0;
-        text-align: right;
-    }
-    .bot-bubble {
-        background-color: #F1F0F0;
-        padding: 10px;
-        border-radius: 15px;
-        margin: 5px 0;
-        text-align: left;
-    }
-    /* Custom scrollbar */
-    .chat-container::-webkit-scrollbar {
-        width: 8px;
-    }
-    .chat-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-    .chat-container::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-    }
-    .chat-container::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+
 
 
 # ========================
@@ -598,4 +544,5 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
 
