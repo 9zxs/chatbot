@@ -464,8 +464,20 @@ with tab1:
 # Display conversation
 # ========================
 if st.session_state.messages:
-    # Scrollable container for chat
-    chat_container = st.container()
+    # Scrollable chat container
+    st.markdown(
+        """
+        <div style="
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 1rem;
+            border: 1px solid #e8eaff;
+            border-radius: 15px;
+            background: linear-gradient(145deg, #f8f9ff, #ffffff);
+        ">
+        """,
+        unsafe_allow_html=True
+    )
 
     for idx, chat in enumerate(st.session_state.messages):
         # User message
@@ -489,7 +501,7 @@ if st.session_state.messages:
             unsafe_allow_html=True
         )
 
-        # Feedback buttons under the bot message
+        # Feedback buttons under each bot message
         col1, col2 = st.columns([1, 1])
         with col1:
             if st.button("👍 Helpful", key=f"yes_{idx}", use_container_width=True):
@@ -505,9 +517,10 @@ if st.session_state.messages:
                     writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
                 st.error("📝 Feedback recorded. We'll improve!")
 
+    # Close the scrollable div
+    st.markdown("</div>", unsafe_allow_html=True)
 
-
-    # Clear chat button outside scrollable area
+    # Clear chat button below the container
     if st.button("🗑️ Clear Chat History"):
         st.session_state.messages = []
         st.rerun()
@@ -520,6 +533,7 @@ else:
         <p>Ask me anything about the university and I'll do my best to help you.</p>
     </div>
     """, unsafe_allow_html=True)
+
 
 
 # ========================
@@ -760,6 +774,7 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
 
 
