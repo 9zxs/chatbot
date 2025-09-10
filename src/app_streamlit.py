@@ -149,7 +149,8 @@ with tab1:
             y_pred_proba = pipeline.predict_proba([user_input])[0]
             y_pred = pipeline.predict([user_input])[0]
             intent = le.inverse_transform([y_pred])[0]
-            confidence = y_pred_proba[y_pred]
+            proba = pipeline.predict_proba([user_input])[0]
+            confidence = float(max(proba))
 
             response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
 
@@ -254,6 +255,7 @@ with tab4:
     plt.ylabel("True")
     plt.title("Confusion Matrix")
     st.pyplot(fig)
+
 
 
 
