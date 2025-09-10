@@ -457,28 +457,33 @@ with tab1:
     
     # Display conversation
     if st.session_state.messages:
-        st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+    chat_html = '<div class="chat-container">'
+    
+    for idx, chat in enumerate(st.session_state.messages):
+        # User message
+        chat_html += f"""
+        <div class="user-message">
+            👤 {chat['user']}
+        </div>
+        """
         
-        for idx, chat in enumerate(st.session_state.messages):
-            # User message
-            st.markdown(f"""
-            <div class="user-message">
-                👤 {chat['user']}
+        # Bot message with metadata
+        confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
+        chat_html += f"""
+        <div class="bot-message">
+            🤖 {chat['bot']}
+            <div class="metadata">
+                🎯 <strong>Intent:</strong> {chat['intent']} | 
+                {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
             </div>
-            """, unsafe_allow_html=True)
-            
-            # Bot message with metadata
-            confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
-            
-            st.markdown(f"""
-            <div class="bot-message">
-                🤖 {chat['bot']}
-                <div class="metadata">
-                    🎯 <strong>Intent:</strong> {chat['intent']} | 
-                    {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        </div>
+        """
+    
+    chat_html += "</div>"
+    
+    # Render all at once
+    st.markdown(chat_html, unsafe_allow_html=True)
+
             
             # Feedback buttons
             col1, col2, col3 = st.columns([1, 1, 4])
@@ -750,3 +755,4 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
