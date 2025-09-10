@@ -1,0 +1,511 @@
+text,intent
+I want to know what's the cost of studying? please? please,tuition_fees
+I want to know please share can you share the fee structure?,tuition_fees
+Please share can you share the fee structure?,tuition_fees
+good morning asap,greeting
+Give me the tuition cost,tuition_fees
+What's the deadline to apply?,admission_deadline
+"Hey, do you offer data science?",courses_offered
+goodbye?,goodbye
+Thanks a bunch,thanks
+Which academic courses are offered?,courses_offered
+I want to know which majors are provided? now,courses_offered
+Please share thanks for your help,thanks
+"Hey, take care",goodbye
+Please share can i still apply after june?,admission_deadline
+Could you explain please share what's the final deadline for forms?,admission_deadline
+any scholarships to reduce tuition? now,tuition_fees
+Please share see ya,goodbye
+hello,greeting
+"hey, please share take care now",goodbye
+Up to when are applications accepted?,admission_deadline
+I want to know can i still apply after june?,admission_deadline
+could you explain is the application window still open? please,admission_deadline
+"Hey, is the application window still open?",admission_deadline
+Could you explain hey,greeting
+do you have masters courses? now,courses_offered
+Please share thank you,thanks
+Could you explain talk to you soon please,goodbye
+Can you tell me could you explain what's the cost of studying? please,tuition_fees
+could you explain see you tomorrow?,goodbye
+morning!,greeting
+Can you tell me howdy,greeting
+How much is the tuition fee?,tuition_fees
+I want to know how much is the tuition fee?,tuition_fees
+Thanks,thanks
+Do you offer data science?,courses_offered
+How many dollars per term?,tuition_fees
+Please share fees for one semester??,tuition_fees
+I want to know talk to you soon,goodbye
+do you have masters courses??,courses_offered
+could you explain what's the cost of studying? please?,tuition_fees
+please share talk to you soon please?,goodbye
+"Could you explain hey, is the application window still open?",admission_deadline
+Could you explain any scholarships to reduce tuition?,tuition_fees
+Grateful for your help,thanks
+could you explain please share take care asap asap,goodbye
+Please share could you explain what's the cost of studying? please,tuition_fees
+"hey, can you tell me do you have masters courses? asap",courses_offered
+i want to know could you tell me the last date to apply? please,admission_deadline
+Appreciate it,thanks
+Can you tell me are bachelor programs offered?,courses_offered
+Could you explain is tuition high?,tuition_fees
+Could you explain are bachelor programs offered?,courses_offered
+fees for one semester? please,tuition_fees
+Can you tell me can i still apply after june?,admission_deadline
+Could you explain see you tomorrow,goodbye
+I want to know can you tell me howdy now,greeting
+"Hey, talk to you soon",goodbye
+"hey, is the application window still open??",admission_deadline
+Could you explain catch you soon,goodbye
+Please share can you tell me do you have masters courses?,courses_offered
+Thank you kindly,thanks
+"Hey, can you tell me howdy",greeting
+Can I still apply after June?,admission_deadline
+hey,greeting
+could you explain see you tomorrow asap,goodbye
+what's the cost of studying??,tuition_fees
+Can you tell me what are the study options?,courses_offered
+Can you tell me i want to know please share can you share the fee structure?,tuition_fees
+could you explain which majors are provided? now??,courses_offered
+howdy please,greeting
+Please share appreciate it,thanks
+Is there a cutoff date for admission?,admission_deadline
+Bye bye,goodbye
+do you offer data science? please,courses_offered
+what's up,greeting
+I want to know can you tell me take care?,goodbye
+Can you tell me please share good morning?,greeting
+"Can you tell me hey, thank you?",thanks
+See you around,goodbye
+could you explain which majors are provided? now asap,courses_offered
+how much is the tuition fee? now,tuition_fees
+hi there asap?,greeting
+Can you tell me is tuition high? now,tuition_fees
+I want to know hey man,greeting
+I want to know can you tell me do you have masters courses?,courses_offered
+can i still apply after june??,admission_deadline
+could you explain is the application window still open? please?,admission_deadline
+Can you share the fee structure?,tuition_fees
+Can you tell me thank you kindly asap,thanks
+thanks so much asap,thanks
+Could you explain which majors are provided? now,courses_offered
+thanks heaps now,thanks
+what's the cost of studying? please? please?,tuition_fees
+please share what are the study options? please please,courses_offered
+hi there asap please,greeting
+"Hey, see you tomorrow",goodbye
+Goodbye,goodbye
+"Hey, am i too late to apply?",admission_deadline
+Could you explain can you tell me can you tell me do you have masters courses?,courses_offered
+can you tell me take care?,goodbye
+how much is the tuition fee? please asap,tuition_fees
+Can you tell me please share thank you kindly,thanks
+Thanks for assisting,thanks
+"Hey, what's the final deadline for forms?",admission_deadline
+hi,greeting
+goodbye asap now,goodbye
+Please share do i need to pay fees upfront?,tuition_fees
+Tell me about the programs,courses_offered
+Deadline for submitting forms?,admission_deadline
+is there a tuition chart? now,tuition_fees
+"Please share hey, can you tell me do you have masters courses?",courses_offered
+fees for one semester??,tuition_fees
+Tell me the admission deadline,admission_deadline
+hiya!,greeting
+i want to know which academic courses are offered? asap,courses_offered
+Could you tell me the last date to apply?,admission_deadline
+I want to know any scholarships to reduce tuition?,tuition_fees
+Take care,goodbye
+Can you tell me catch you soon now,goodbye
+Please share talk to you soon,goodbye
+Please share please share greetings,greeting
+Could you tell me the tuition?,tuition_fees
+Please share tell me the list of courses,courses_offered
+thank you now,thanks
+could you explain please share take care asap,goodbye
+Could you explain thanks for your help,thanks
+bye please,goodbye
+hey there,greeting
+I want to know good evening,greeting
+Is tuition high?,tuition_fees
+take care now,goodbye
+could you explain which majors are provided? now?,courses_offered
+Please share could you explain thanks for your help,thanks
+"Hey, thank you?",thanks
+Thank you,thanks
+Tell me about the course fees,tuition_fees
+is there a tuition chart? asap,tuition_fees
+thank you? please,thanks
+Please share could you explain which majors are provided? now,courses_offered
+what's up asap,greeting
+greetings asap,greeting
+thanks so much now,thanks
+do you offer data science? asap,courses_offered
+good morning?,greeting
+bye asap,goodbye
+"Can you tell me hey, is the application window still open?",admission_deadline
+yo!,greeting
+"I want to know could you explain hey, can you tell me do you have masters courses?",courses_offered
+"Hey, please share greetings",greeting
+"I want to know hey, thank you?",thanks
+Can you tell me see you tomorrow,goodbye
+Until when can I apply?,admission_deadline
+programs in engineering??,courses_offered
+Please share am i too late to apply?,admission_deadline
+Am I too late to apply?,admission_deadline
+Catch you soon,goodbye
+Can you tell me goodbye asap,goodbye
+Could you explain is there a tuition chart?,tuition_fees
+please share could you tell me the last date to apply? please,admission_deadline
+"hey, am i too late to apply? asap",admission_deadline
+"hey, hi there now",greeting
+"Hey, what's the cost of studying? please? please",tuition_fees
+Could you explain thanks for assisting,thanks
+hey man?,greeting
+can you share the fee structure? now,tuition_fees
+Peace out,goodbye
+Could you explain talk to you soon,goodbye
+hello there?,greeting
+hi there asap,greeting
+"Could you explain hey, can you tell me do you have masters courses?",courses_offered
+How much do I need to pay per semester?,tuition_fees
+hi please,greeting
+please share what are the study options? please now,courses_offered
+Farewell,goodbye
+catch you later please,goodbye
+good morning please,greeting
+Please share good morning?,greeting
+Any scholarships to reduce tuition?,tuition_fees
+how much is the tuition fee? please,tuition_fees
+Can you tell me take care,goodbye
+evening!,greeting
+good evening please,greeting
+Can you tell me can you tell me take care,goodbye
+"hey, thanks heaps?",thanks
+How expensive is tuition?,tuition_fees
+"Please share hey, hey, thanks heaps",thanks
+"hey, can you tell me do you have masters courses? please",courses_offered
+hi buddy,greeting
+"Could you explain hey, thank you?",thanks
+thank you?,thanks
+Please share could you tell me the last date to apply?,admission_deadline
+Please share greetings,greeting
+Please share which academic courses are offered?,courses_offered
+could you explain is the application window still open? please asap,admission_deadline
+"Hey, hey, am i too late to apply?",admission_deadline
+"Hey, can you tell me take care",goodbye
+Could you explain goodbye,goodbye
+Could you explain please share thank you kindly now,thanks
+What courses do you have?,courses_offered
+talk to you soon please asap,goodbye
+can you tell me howdy?,greeting
+Do you provide computer science?,courses_offered
+What courses are available?,courses_offered
+Can you tell me am i too late to apply? please,admission_deadline
+Can you tell me good evening please,greeting
+"Hey, good evening",greeting
+"hey, am i too late to apply? now",admission_deadline
+Is there a tuition chart?,tuition_fees
+could you explain thanks for your help?,thanks
+thanks for assisting please,thanks
+Thanks again,thanks
+Can you tell me could you explain is the application window still open?,admission_deadline
+hi there,greeting
+am i too late to apply? please,admission_deadline
+Please share can you tell me howdy now,greeting
+"Hey, catch you soon",goodbye
+"Hey, thanks for assisting",thanks
+I want to know which academic courses are offered?,courses_offered
+"Hey, goodbye",goodbye
+do i need to pay fees upfront? now,tuition_fees
+"Hey, i want to know could you tell me the last date to apply?",admission_deadline
+Can you tell me could you explain thanks for your help,thanks
+Later!,goodbye
+Thanks so much,thanks
+"Hey, please share take care",goodbye
+"can you tell me hey, is the application window still open? now",admission_deadline
+Fees for one semester?,tuition_fees
+greetings,greeting
+Could you explain how many dollars per term?,tuition_fees
+"Hey, please share hey, what's up",greeting
+programs in engineering? please,courses_offered
+I want to know is the application window still open? asap,admission_deadline
+Could you explain catch you later,goodbye
+Can you tell me which majors are provided?,courses_offered
+"Hey, can you tell me can you tell me do you have masters courses?",courses_offered
+what's the cost of studying? asap,tuition_fees
+Could you explain am i too late to apply? please,admission_deadline
+Are bachelor programs offered?,courses_offered
+thank you asap,thanks
+tell me the list of courses please please,courses_offered
+is tuition high? now?,tuition_fees
+Can you tell me cheers!,thanks
+do you offer data science??,courses_offered
+hi there now,greeting
+By what date must I apply?,admission_deadline
+"Hey, hey, talk to you soon",goodbye
+I want to know what's the final deadline for forms?,admission_deadline
+"Hey, is tuition high?",tuition_fees
+I want to know thank you,thanks
+I want to know is there a tuition chart?,tuition_fees
+"Hey, could you explain hey, thanks heaps",thanks
+see you tomorrow?,goodbye
+Is the application window still open?,admission_deadline
+appreciate it asap,thanks
+see ya now,goodbye
+Please share thank you kindly,thanks
+what's the cost of studying? please,tuition_fees
+i want to know what's the cost of studying? please? please asap,tuition_fees
+thank you kindly asap please,thanks
+Could you explain thank you kindly asap,thanks
+What subjects can I study here?,courses_offered
+When do applications close?,admission_deadline
+hey man? asap,greeting
+Any postgraduate courses?,courses_offered
+Could you explain much appreciated,thanks
+Which programs are available?,courses_offered
+sup??,greeting
+do i need to pay fees upfront??,tuition_fees
+Thanks heaps,thanks
+Please share am i too late to apply? please,admission_deadline
+Could you explain hey man?,greeting
+what are the study options? please,courses_offered
+thank you kindly asap,thanks
+Can you tell me thank you?,thanks
+Can you tell me much appreciated,thanks
+howdy,greeting
+"please share hey, what's up asap",greeting
+"I'm off, bye",goodbye
+Please share can you tell me can you tell me do you have masters courses?,courses_offered
+How much should I budget for tuition?,tuition_fees
+Please share do you have masters courses?,courses_offered
+Please share are bachelor programs offered?,courses_offered
+Could you explain is the application window still open?,admission_deadline
+"could you explain hey, can you tell me do you have masters courses? asap",courses_offered
+Please share please share talk to you soon,goodbye
+I want to know do you have masters courses?,courses_offered
+"Hey, appreciate it",thanks
+hey man??,greeting
+tuition fees,tuition_fees
+See you later,goodbye
+"hey, talk to you soon now",goodbye
+much appreciated now,thanks
+I really appreciate it,thanks
+Could you explain good evening?,greeting
+"Hey, thanks heaps",thanks
+Please share i want to know which academic courses are offered?,courses_offered
+"Hey, could you explain is the application window still open? please",admission_deadline
+"Could you explain could you explain hey, can you tell me do you have masters courses? asap",courses_offered
+can you share the fee structure? please,tuition_fees
+Could you explain how much is the tuition fee? please,tuition_fees
+Talk to you soon,goodbye
+what's the deadline to apply? now,admission_deadline
+appreciate it now,thanks
+Can you tell me please share talk to you soon please,goodbye
+hello there,greeting
+"Hey, please share good morning?",greeting
+See ya,goodbye
+Please share when is the application deadline?,admission_deadline
+take care?,goodbye
+I want to know please share much appreciated,thanks
+catch you soon now?,goodbye
+Thanks for your help,thanks
+Please share what are the study options?,courses_offered
+hi there?,greeting
+Please share is there a tuition chart?,tuition_fees
+is the application window still open? asap?,admission_deadline
+talk to you soon please,goodbye
+Until next time,goodbye
+please share what are the study options? now,courses_offered
+what's the cost of studying? please? please,tuition_fees
+see you tomorrow please,goodbye
+I want to know what's up,greeting
+Is business administration available?,courses_offered
+good evening asap,greeting
+"Hey, i want to know fees for one semester?",tuition_fees
+"Hey, hey, thanks heaps",thanks
+Talk later,goodbye
+"Hey, please share talk to you soon",goodbye
+could you explain thanks for your help please,thanks
+"Hey, what's the cost of studying? please",tuition_fees
+can you tell me do you have masters courses? now,courses_offered
+Could you explain i want to know please share can you share the fee structure?,tuition_fees
+Could you explain how much is the tuition fee?,tuition_fees
+is tuition high? now,tuition_fees
+I want to know could you tell me the last date to apply?,admission_deadline
+"could you explain hey, thanks heaps asap",thanks
+Thanks buddy,thanks
+please share much appreciated?,thanks
+Do you provide IT programs?,courses_offered
+Big thanks,thanks
+please share thank you kindly now,thanks
+what's the cost of studying? please?,tuition_fees
+Please share much appreciated,thanks
+is the application window still open? asap,admission_deadline
+please share thank you kindly now now,thanks
+Offerings in business?,courses_offered
+could you explain is the application window still open? asap,admission_deadline
+Is there a late deadline?,admission_deadline
+could you tell me the last date to apply??,admission_deadline
+which majors are provided? please,courses_offered
+"hey, thank you? now",thanks
+Price per semester?,tuition_fees
+please share talk to you soon please,goodbye
+Could you explain could you explain is the application window still open?,admission_deadline
+Thanks a lot,thanks
+"Hey, thanks so much",thanks
+are bachelor programs offered? please,courses_offered
+Catch you later on,goodbye
+could you explain how many dollars per term? now,tuition_fees
+"Hey, goodbye asap",goodbye
+Can you tell me please share greetings,greeting
+What's the last day to submit application?,admission_deadline
+When is the application deadline?,admission_deadline
+can you tell me take care? now,goodbye
+"hey, is the application window still open? please",admission_deadline
+Please share i want to know fees for one semester?,tuition_fees
+hi friend,greeting
+Can you tell me hey,greeting
+"Hey, hi there",greeting
+am i too late to apply??,admission_deadline
+which academic courses are offered? asap,courses_offered
+Please share take care,goodbye
+good evening?,greeting
+Can you tell me am i too late to apply?,admission_deadline
+tell me the list of courses please,courses_offered
+"Hey, could you explain please share take care asap",goodbye
+Could you explain when is the application deadline?,admission_deadline
+am i too late to apply? please?,admission_deadline
+please share can you share the fee structure??,tuition_fees
+"hey, please share take care asap",goodbye
+am i too late to apply? asap now,admission_deadline
+I want to know are bachelor programs offered?,courses_offered
+please share talk to you soon now,goodbye
+I want to know can you tell me howdy,greeting
+what's the deadline to apply? asap,admission_deadline
+Programs in engineering?,courses_offered
+good morning,greeting
+Could you explain please share take care,goodbye
+"Hey, can you tell me do you have masters courses?",courses_offered
+"hey, what's up now",greeting
+I want to know much appreciated,thanks
+Could you explain application submission last date?,admission_deadline
+"I want to know hey, please share take care",goodbye
+I want to know do you offer data science?,courses_offered
+is there a tuition chart? please,tuition_fees
+Which majors are provided?,courses_offered
+Please share please share could you tell me the last date to apply?,admission_deadline
+Can you tell me could you explain please share take care,goodbye
+"Please share could you explain hey, thanks heaps",thanks
+What's the tuition per year?,tuition_fees
+good morning? now,greeting
+Bye,goodbye
+"Could you explain hey, hey, thanks heaps",thanks
+can you tell me howdy now,greeting
+could you explain which majors are provided? now? now,courses_offered
+"Hey, can i still apply after june?",admission_deadline
+much appreciated please please,thanks
+am i too late to apply? asap please,admission_deadline
+much appreciated please,thanks
+"Hey, application submission last date?",admission_deadline
+"Gotta go, bye",goodbye
+Can you tell me is the application window still open?,admission_deadline
+What are the study options?,courses_offered
+Final date to send application?,admission_deadline
+tell me the list of courses please now,courses_offered
+Thank you very much,thanks
+is tuition high? now? asap,tuition_fees
+which majors are provided? now,courses_offered
+see ya please,goodbye
+how many dollars per term? now,tuition_fees
+could you explain how many dollars per term??,tuition_fees
+please share what are the study options? please,courses_offered
+Could you explain what's the cost of studying? please,tuition_fees
+please share could you tell me the last date to apply??,admission_deadline
+"Hey, i want to know please share can you share the fee structure?",tuition_fees
+"Hey, please share thank you kindly",thanks
+am i too late to apply? asap,admission_deadline
+How much does the program cost?,tuition_fees
+"Please share hey, what's up",greeting
+Can you tell me good evening,greeting
+catch you soon now,goodbye
+"Hey, good morning?",greeting
+how many dollars per term? please,tuition_fees
+"Could you explain hey, hi there",greeting
+hey?,greeting
+"hey, is the application window still open? asap",admission_deadline
+Can you tell me i want to know which academic courses are offered?,courses_offered
+can i still apply after june? now,admission_deadline
+"Can you tell me could you explain hey, can you tell me do you have masters courses? asap",courses_offered
+I want to know good morning,greeting
+cheers! asap,thanks
+When should I submit my application?,admission_deadline
+thank you kindly now,thanks
+Can you tell me can you tell me do you have masters courses?,courses_offered
+Cheers!,thanks
+good evening,greeting
+"Hey, what's up",greeting
+Can you share the programs?,courses_offered
+hello there please,greeting
+Do I need to pay fees upfront?,tuition_fees
+Thanks a ton,thanks
+Could you explain catch you soon now,goodbye
+when is the application deadline? asap,admission_deadline
+can you tell me take care??,goodbye
+Much appreciated,thanks
+What's the final deadline for forms?,admission_deadline
+tell me the list of courses please asap,courses_offered
+please share much appreciated asap,thanks
+"Could you explain please share hey, what's up",greeting
+Can you tell me do you have masters courses?,courses_offered
+Deadline for applications?,admission_deadline
+"Could you explain hey, thanks heaps",thanks
+sup?,greeting
+Please share talk to you soon please,goodbye
+Can you tell me how much is the tuition fee? please,tuition_fees
+"Hey, am i too late to apply? asap",admission_deadline
+I want to know good evening please,greeting
+"Hey, good evening?",greeting
+Can you tell me please share what's the final deadline for forms?,admission_deadline
+hey man,greeting
+List the available degrees,courses_offered
+What's the cost of studying?,tuition_fees
+Do you have masters courses?,courses_offered
+Please share is tuition high? now?,tuition_fees
+is tuition high? now??,tuition_fees
+can you tell me do you have masters courses??,courses_offered
+Could you explain hi there,greeting
+goodbye please,goodbye
+is tuition high? now asap,tuition_fees
+Catch you later,goodbye
+Please share what's the final deadline for forms?,admission_deadline
+"could you explain hey, can you tell me do you have masters courses??",courses_offered
+which academic courses are offered??,courses_offered
+Tell me the list of courses,courses_offered
+is tuition high? asap,tuition_fees
+I want to know thank you?,thanks
+"Hey, is the application window still open? asap",admission_deadline
+Application submission last date?,admission_deadline
+I want to know fees for one semester?,tuition_fees
+"hi, how are you?",greeting
+Could you explain what's the deadline to apply?,admission_deadline
+"hey, thank you? please",thanks
+Please share howdy,greeting
+fees for one semester?? asap,tuition_fees
+"can you tell me hey, is the application window still open??",admission_deadline
+Many thanks,thanks
+Can you tell me what's the cost of studying? please?,tuition_fees
+hi?,greeting
+could you explain please share take care now,goodbye
+See you shortly,goodbye
+"Hey, thanks for your help",thanks
+hi there asap asap,greeting
+See you tomorrow,goodbye
+I want to know is tuition high?,tuition_fees
+What's the price of tuition?,tuition_fees
+I want to know thanks for your help,thanks
+goodbye asap,goodbye
+"could you explain hey, can you tell me do you have masters courses? asap now",courses_offered
+"I want to know hey, hi there",greeting
+please share what's the final deadline for forms? now,admission_deadline
