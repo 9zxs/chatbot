@@ -450,15 +450,15 @@ if st.session_state.messages:
 
         # Bot bubble
         confidence_color = "🟢" if chat['confidence'] > 0.7 else "🟡" if chat['confidence'] > 0.5 else "🔴"
-        chat_html += f"""
-        <div class="bot-message">
-            🤖 {chat['bot']}
-            <div class="metadata">
-                🎯 <strong>Intent:</strong> {chat['intent']} | 
-                {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
+        st.markdown(f"""
+            <div class="bot-message">
+                🤖 {chat['bot']}
+                <div class="metadata">
+                    🎯 <strong>Intent:</strong> {chat['intent']} | 
+                    {confidence_color} <strong>Confidence:</strong> {chat['confidence']:.2f}
+                </div>
             </div>
-        </div>
-        """
+            """, unsafe_allow_html=True)
 
         # Feedback buttons (Streamlit)
         col1, col2, col3 = st.columns([1, 1, 4])
@@ -731,5 +731,6 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
 
