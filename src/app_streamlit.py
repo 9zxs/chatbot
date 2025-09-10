@@ -38,10 +38,16 @@ def retrain_model():
     le = LabelEncoder()
     df["label"] = le.fit_transform(df["intent"])
 
-    # Train/test split
-    X_train, X_test, y_train, y_test = train_test_split(
-        df["text"], df["label"], test_size=0.2, random_state=42, stratify=df["label"]
-    )
+    # Check if stratify is possible
+    try:
+        X_train, X_test, y_train, y_test = train_test_split(
+            df["text"], df["label"], test_size=0.2, random_state=42, stratify=df["label"]
+        )
+    except ValueError:
+        # Fallback: no stratification
+        X_train, X_test, y_train, y_test = train_test_split(
+            df["text"], df["label"], test_size=0.2, random_state=42
+        )
 
     # Build pipeline
     pipeline = Pipeline([
@@ -60,7 +66,6 @@ def retrain_model():
     joblib.dump({"pipeline": pipeline, "label_encoder": le}, MODEL_FILE)
 
     return pipeline, le, train_acc, test_acc
-
 
 # ========================
 # Load or train model
@@ -205,3 +210,4 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
