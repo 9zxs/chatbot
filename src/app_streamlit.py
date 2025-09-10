@@ -126,6 +126,34 @@ st.markdown(
 )
 
 # ========================
+# Quick Question Buttons
+# ========================
+st.markdown("### ⚡ Quick Questions")
+
+quick_questions = [
+    "When is the application deadline?",
+    "How much is the tuition fee?",
+    "What courses are available?",
+    "hello",
+    "Thanks",
+    "Bye"
+]
+
+cols = st.columns(len(quick_questions))
+
+for i, q in enumerate(quick_questions):
+    if cols[i].button(q):
+        # Predict intent
+        y_pred = pipeline.predict([q])[0]
+        intent = le.inverse_transform([y_pred])[0]
+        response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
+
+        # Add to session history
+        st.session_state.messages.append(
+            {"user": q, "bot": response, "intent": intent}
+        )
+
+# ========================
 # Streamlit UI
 # ========================
 st.title("🎓 University Chatbot")
@@ -175,3 +203,4 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
