@@ -492,22 +492,6 @@ if st.session_state.messages:
     # Render all messages at once
     st.markdown(chat_html, unsafe_allow_html=True)
 
-    # Streamlit buttons for handling feedback clicks
-    for idx, chat in enumerate(st.session_state.messages):
-        col1, col2 = st.columns([1, 1])
-        with col1:
-            if st.button("👍 Helpful", key=f"yes_{idx}"):
-                with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
-                    writer = csv.writer(f)
-                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "yes"])
-                st.success("✅ Thanks for your feedback!")
-        with col2:
-            if st.button("👎 Not Helpful", key=f"no_{idx}"):
-                with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
-                    writer = csv.writer(f)
-                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
-                st.error("📝 Feedback recorded. We'll improve!")
-
     # Clear chat button
     if st.button("🗑️ Clear Chat History"):
         st.session_state.messages = []
@@ -760,6 +744,7 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
 
 
