@@ -1,5 +1,8 @@
 user_input,predicted_intent,confidence,response,feedback
-Hello,greeting,0.82,Hi there! What can I do for you?,yes
-Hello,greeting,0.82,Hi there! What can I do for you?,yes
-hi,greeting,0.4488222939058768,Hi there! What can I do for you?,yes
+Hello	greeting	0.82	Hi there! What can I do for you?	yes
+Hello	greeting	0.82	Hi there! What can I do for you?	yes
+hi	greeting	0.4488222939058768	Hi there! What can I do for you?	yes
+When is the application deadline?	admission_deadline	0.86	You need to apply before June 30th.	yes
+How much does the program cost per semester?	tuition_fees	0.71	The tuition fee is $5000 per semester.	yes
+tuition	tuition_fees	0.87	The tuition fee is $5000 per semester.	yes
 
