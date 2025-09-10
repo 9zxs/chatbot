@@ -117,43 +117,52 @@ st.markdown(
 # ========================
 tab1, tab2, tab3 = st.tabs(["💬 Chatbot", "📊 Info", "📥 Feedback Data"])
 
-# ------------------------
+# ========================
 # Tab 1: Chatbot
-# ------------------------
+# ========================
 with tab1:
     st.title("🎓 University Chatbot")
     st.markdown("Ask me about admissions, tuition, courses, and more.")
 
+    # Keep chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
+    # Input box
     user_input = st.text_input("💬 Type your message here:")
 
     if st.button("Send") and user_input.strip():
-        if pipeline is not None:
-            y_pred = pipeline.predict([user_input])[0]
-            intent = le.inverse_transform([y_pred])[0]
-            response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
-            st.session_state.messages.append({"user": user_input, "bot": response, "intent": intent})
-        else:
-            st.warning("⚠️ Chatbot model not available. Please check training data.")
+        # Predict intent + confidence
+        y_pred = pipeline.predict([user_input])[0]
+        intent = le.inverse_transform([y_pred])[0]
+        proba = pipeline.predict_proba([user_input])[0]
+        confidence = float(max(proba))  # highest probability as confidence
 
+        response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
+
+        # Add to session history
+        st.session_state.messages.append(
+            {"user": user_input, "bot": response, "intent": intent, "confidence": confidence}
+        )
+
+    # Display conversation
     for idx, chat in enumerate(st.session_state.messages):
         st.markdown(f"<div class='user-bubble'>🙋‍♂️ {chat['user']}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']} <br><small>🎯 Intent: {chat['intent']} | 🔍 Confidence: {chat['confidence']:.2f}</small></div>", unsafe_allow_html=True)
 
+        # Feedback buttons
         col1, col2 = st.columns(2)
         with col1:
             if st.button("👍 Helpful", key=f"yes_{idx}"):
                 with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                     writer = csv.writer(f)
-                    writer.writerow([chat["user"], chat["intent"], chat["bot"], "yes"])
+                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "yes"])
                 st.success("Feedback recorded: Yes")
         with col2:
             if st.button("👎 Not Helpful", key=f"no_{idx}"):
                 with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                     writer = csv.writer(f)
-                    writer.writerow([chat["user"], chat["intent"], chat["bot"], "no"])
+                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
                 st.error("Feedback recorded: No")
 
 # ------------------------
@@ -187,3 +196,4 @@ with tab3:
         )
     else:
         st.info("No feedback data available yet.")
+
