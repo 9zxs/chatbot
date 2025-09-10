@@ -51,201 +51,256 @@ if not os.path.exists(FEEDBACK_FILE):
 # ========================
 # Enhanced CSS Styling
 # ========================
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-.main {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    font-family: 'Inter', sans-serif;
-}
-
-.stApp {
-    background: transparent;
-}
-
-.header-container {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    padding: 2rem;
-    border-radius: 20px;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.header-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #2D3748;
-    margin-bottom: 0.5rem;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.header-subtitle {
-    font-size: 1.1rem;
-    color: #718096;
-    font-weight: 400;
-}
-
-.chat-container {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    min-height: 500px;
-    max-height: 600px;
-    overflow-y: auto;
-    margin-bottom: 1rem;
-}
-
-.message-container {
-    display: flex;
-    margin: 1rem 0;
-    animation: slideIn 0.3s ease-out;
-}
-
-.user-message {
-    justify-content: flex-end;
-}
-
-.bot-message {
-    justify-content: flex-start;
-}
-
-.message-bubble {
-    max-width: 70%;
-    padding: 1rem 1.25rem;
-    border-radius: 18px;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    word-wrap: break-word;
-    position: relative;
-}
-
-.user-bubble {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    margin-left: auto;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
-
-.bot-bubble {
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    color: #2D3748;
-    margin-right: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #667eea;
-}
-
-.message-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    margin: 0 10px;
-    flex-shrink: 0;
-}
-
-.user-avatar {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    order: 2;
-}
-
-.bot-avatar {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    color: white;
-    order: 1;
-}
-
-.input-container {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin-top: 1rem;
-}
-
-.feedback-container {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-    justify-content: flex-end;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 3rem 1rem;
-    color: #718096;
-}
-
-.empty-state-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-}
-
-.chat-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.chat-container::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.chat-container::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 10px;
-}
-
-.chat-container::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(135deg, #5a67d8, #6b46c1);
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+st.markdown(
+    """
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    .main {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: 'Inter', sans-serif;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    
+    .stApp {
+        background: transparent;
     }
-}
-
-.stDeployButton {display:none;}
-footer {visibility: hidden;}
-.stApp > header {visibility: hidden;}
-
-@media (max-width: 768px) {
+    
+    /* Header styling */
+    .header-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
     .header-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2D3748;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .header-subtitle {
+        font-size: 1.1rem;
+        color: #718096;
+        font-weight: 400;
+    }
+    
+    /* Chat container */
+    .chat-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        min-height: 500px;
+        max-height: 600px;
+        overflow-y: auto;
+        margin-bottom: 1rem;
+    }
+    
+    /* Message bubbles */
+    .message-container {
+        display: flex;
+        margin: 1rem 0;
+        animation: slideIn 0.3s ease-out;
+    }
+    
+    .user-message {
+        justify-content: flex-end;
+    }
+    
+    .bot-message {
+        justify-content: flex-start;
     }
     
     .message-bubble {
-        max-width: 85%;
+        max-width: 70%;
+        padding: 1rem 1.25rem;
+        border-radius: 18px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        word-wrap: break-word;
+        position: relative;
     }
     
-    .chat-container {
-        padding: 1rem;
-        max-height: 400px;
+    .user-bubble {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        margin-left: auto;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
     }
-}
-</style>
-""", unsafe_allow_html=True)
+    
+    .bot-bubble {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        color: #2D3748;
+        margin-right: auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #667eea;
+    }
+    
+    /* Avatar styling */
+    .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        margin: 0 10px;
+        flex-shrink: 0;
+    }
+    
+    .user-avatar {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        order: 2;
+    }
+    
+    .bot-avatar {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        color: white;
+        order: 1;
+    }
+    
+    /* Input area */
+    .input-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        margin-top: 1rem;
+    }
+    
+    /* Feedback buttons */
+    .feedback-container {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+        justify-content: flex-end;
+    }
+    
+    .feedback-btn {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(5px);
+    }
+    
+    .feedback-btn:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Animations */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Empty state */
+    .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #718096;
+    }
+    
+    .empty-state-icon {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+    
+    /* Quick suggestions */
+    .suggestions-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    
+    .suggestion-chip {
+        background: rgba(102, 126, 234, 0.1);
+        color: #667eea;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+    }
+    
+    .suggestion-chip:hover {
+        background: rgba(102, 126, 234, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    /* Custom scrollbar */
+    .chat-container::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    .chat-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    
+    .chat-container::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 10px;
+    }
+    
+    .chat-container::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #5a67d8, #6b46c1);
+    }
+    
+    /* Hide Streamlit elements */
+    .stDeployButton {display:none;}
+    footer {visibility: hidden;}
+    .stApp > header {visibility: hidden;}
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .header-title {
+            font-size: 2rem;
+        }
+        
+        .message-bubble {
+            max-width: 85%;
+        }
+        
+        .chat-container {
+            padding: 1rem;
+            max-height: 400px;
+        }
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 # ========================
 # Utility Functions
@@ -290,12 +345,15 @@ if "feedback_given" not in st.session_state:
 # ========================
 # Header Section
 # ========================
-st.markdown("""
+st.markdown(
+    """
     <div class="header-container">
         <div class="header-title">🎓 University Assistant</div>
         <div class="header-subtitle">Your smart companion for university information • Ask about admissions, courses, fees, and more!</div>
     </div>
-    """, unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True,
+)
 
 # ========================
 # Main Chat Interface
@@ -430,7 +488,7 @@ with col2:
             st.rerun()
 
 # ========================
-# Sidebar with Statistics
+# Sidebar with Statistics (Optional)
 # ========================
 with st.sidebar:
     st.markdown("### 📊 Chat Statistics")
@@ -450,4 +508,88 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("### ℹ️ About")
-    st.markdown("This AI assistant helps with university-related queries using machine learning to understand your questions and provide relevant responses.")
+    st.markdown("This AI assistant helps with university-related queries using machine learning to understand your questions and provide relevant responses.")        background-color: #DCF8C6;
+        padding: 10px;
+        border-radius: 15px;
+        margin: 5px 0;
+        text-align: right;
+    }
+    .bot-bubble {
+        background-color: #F1F0F0;
+        padding: 10px;
+        border-radius: 15px;
+        margin: 5px 0;
+        text-align: left;
+    }
+    /* Custom scrollbar */
+    .chat-container::-webkit-scrollbar {
+        width: 8px;
+    }
+    .chat-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+    .chat-container::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+    .chat-container::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
+# ========================
+# Streamlit UI
+# ========================
+st.title("🎓 University Chatbot")
+st.markdown("Ask me about admissions, tuition, courses, and more.")
+
+# Keep chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Input box
+user_input = st.text_input("💬 Type your message here:")
+
+if st.button("Send") and user_input.strip():
+    # Predict intent
+    y_pred = pipeline.predict([user_input])[0]
+    intent = le.inverse_transform([y_pred])[0]
+
+    response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
+
+    # Add to session history
+    st.session_state.messages.append(
+        {"user": user_input, "bot": response, "intent": intent}
+    )
+
+# ========================
+# Display conversation in scrollable box
+# ========================
+
+for idx, chat in enumerate(st.session_state.messages):
+    # User bubble
+    st.markdown(f"<div class='user-bubble'>🙋‍♂️ {chat['user']}</div>", unsafe_allow_html=True)
+    # Bot bubble
+    st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']}</div>", unsafe_allow_html=True)
+
+    # Feedback buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("👍 Helpful", key=f"yes_{idx}"):
+            with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow([chat["user"], chat["intent"], chat["bot"], "yes"])
+            st.success("Feedback recorded: Yes")
+    with col2:
+        if st.button("👎 Not Helpful", key=f"no_{idx}"):
+            with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow([chat["user"], chat["intent"], chat["bot"], "no"])
+            st.error("Feedback recorded: No")
+
+st.markdown("</div>", unsafe_allow_html=True)
