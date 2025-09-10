@@ -28,18 +28,14 @@ INTENTS_FILE = "data/intents.json"
 # ========================
 @st.cache_resource
 def retrain_model():
-    # Load dataset
-    df = pd.read_csv("data/train_data.csv")
+    df = pd.read_csv(TRAIN_FILE)
 
     # Encode labels
     le = LabelEncoder()
     df["label"] = le.fit_transform(df["intent"])
 
     # ✅ Safe stratify check
-    if df["label"].value_counts().min() > 1:
-        stratify = df["label"]
-    else:
-        stratify = None
+    stratify = df["label"] if df["label"].value_counts().min() > 1 else None
 
     # Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
@@ -52,7 +48,6 @@ def retrain_model():
         ("clf", LogisticRegression(max_iter=1000))
     ])
 
-    # Train
     pipeline.fit(X_train, y_train)
 
     # Accuracy scores
@@ -60,6 +55,15 @@ def retrain_model():
     test_acc = pipeline.score(X_test, y_test)
 
     return pipeline, le, train_acc, test_acc
+
+# ========================
+# Train / load model
+# ========================
+try:
+    pipeline, le, train_acc, test_acc = retrain_model()
+except Exception as e:
+    st.error(f"⚠️ Model training failed: {e}")
+    pipeline, le, train_acc, test_acc = None, None, 0, 0
 
 # ========================
 # Load intents
@@ -103,20 +107,6 @@ st.markdown(
         margin: 5px 0;
         text-align: left;
     }
-    .chat-container::-webkit-scrollbar {
-        width: 8px;
-    }
-    .chat-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-    }
-    .chat-container::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-    }
-    .chat-container::-webkit-scrollbar-thumb:hover {
-        background: #555;
-    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -134,31 +124,24 @@ with tab1:
     st.title("🎓 University Chatbot")
     st.markdown("Ask me about admissions, tuition, courses, and more.")
 
-    # Keep chat history
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # Input box
     user_input = st.text_input("💬 Type your message here:")
 
     if st.button("Send") and user_input.strip():
-        # Predict intent
-        y_pred = pipeline.predict([user_input])[0]
-        intent = le.inverse_transform([y_pred])[0]
+        if pipeline is not None:
+            y_pred = pipeline.predict([user_input])[0]
+            intent = le.inverse_transform([y_pred])[0]
+            response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
+            st.session_state.messages.append({"user": user_input, "bot": response, "intent": intent})
+        else:
+            st.warning("⚠️ Chatbot model not available. Please check training data.")
 
-        response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
-
-        # Add to session history
-        st.session_state.messages.append(
-            {"user": user_input, "bot": response, "intent": intent}
-        )
-
-    # Display conversation
     for idx, chat in enumerate(st.session_state.messages):
         st.markdown(f"<div class='user-bubble'>🙋‍♂️ {chat['user']}</div>", unsafe_allow_html=True)
         st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']}</div>", unsafe_allow_html=True)
 
-        # Feedback buttons
         col1, col2 = st.columns(2)
         with col1:
             if st.button("👍 Helpful", key=f"yes_{idx}"):
@@ -181,7 +164,6 @@ with tab2:
     st.write(f"✅ Training Accuracy: **{train_acc:.2f}**")
     st.write(f"✅ Testing Accuracy: **{test_acc:.2f}**")
 
-    # Feedback count
     if os.path.exists(FEEDBACK_FILE):
         feedback_df = pd.read_csv(FEEDBACK_FILE)
         st.write(f"📝 Feedback Collected: **{len(feedback_df)}** entries")
@@ -196,8 +178,6 @@ with tab3:
     if os.path.exists(FEEDBACK_FILE):
         fb_data = pd.read_csv(FEEDBACK_FILE)
         st.dataframe(fb_data)
-
-        # Download button
         csv_dl = fb_data.to_csv(index=False).encode("utf-8")
         st.download_button(
             label="⬇️ Download feedback.csv",
@@ -207,4 +187,3 @@ with tab3:
         )
     else:
         st.info("No feedback data available yet.")
-
