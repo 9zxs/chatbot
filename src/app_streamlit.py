@@ -16,13 +16,23 @@ from sklearn.pipeline import Pipeline
 # ========================
 st.set_page_config(page_title="University Chatbot", page_icon="🤖")
 
+DATA_FILE = "data/train_data.csv"
+FEEDBACK_FILE = "data/feedback.csv"
+MODEL_FILE = "src/model.pkl"
+
 # ========================
-# Load dataset & train model
+# Retrain function
 # ========================
-@st.cache_resource
-def load_and_train():
+def retrain_model():
     # Load dataset
-    df = pd.read_csv("data/train_data.csv")
+    df = pd.read_csv(DATA_FILE)
+
+    # Merge feedback (only positive samples)
+    if os.path.exists(FEEDBACK_FILE):
+        feedback_df = pd.read_csv(FEEDBACK_FILE)
+        feedback_yes = feedback_df[feedback_df["feedback"] == "yes"].copy()
+        feedback_yes.rename(columns={"user_input": "text", "predicted_intent": "intent"}, inplace=True)
+        df = pd.concat([df, feedback_yes[["text", "intent"]]], ignore_index=True)
 
     # Encode labels
     le = LabelEncoder()
@@ -30,12 +40,12 @@ def load_and_train():
 
     # Train/test split
     X_train, X_test, y_train, y_test = train_test_split(
-        df["text"], df["label"], test_size=0.2, random_state=42
+        df["text"], df["label"], test_size=0.2, random_state=42, stratify=df["label"]
     )
 
     # Build pipeline
     pipeline = Pipeline([
-        ("tfidf", TfidfVectorizer()),
+        ("tfidf", TfidfVectorizer(ngram_range=(1, 2), max_features=5000)),
         ("clf", LogisticRegression(max_iter=1000))
     ])
 
@@ -46,9 +56,26 @@ def load_and_train():
     train_acc = pipeline.score(X_train, y_train)
     test_acc = pipeline.score(X_test, y_test)
 
+    # Save model
+    joblib.dump({"pipeline": pipeline, "label_encoder": le}, MODEL_FILE)
+
     return pipeline, le, train_acc, test_acc
 
-pipeline, le, train_acc, test_acc = load_and_train()
+
+# ========================
+# Load or train model
+# ========================
+@st.cache_resource
+def load_model():
+    if os.path.exists(MODEL_FILE):
+        model_data = joblib.load(MODEL_FILE)
+        pipeline = model_data["pipeline"]
+        le = model_data["label_encoder"]
+        return pipeline, le, None, None
+    else:
+        return retrain_model()
+
+pipeline, le, train_acc, test_acc = load_model()
 
 # ========================
 # Load intents
@@ -57,8 +84,8 @@ with open("data/intents.json", encoding="utf-8") as f:
     intents = json.load(f)
 
 intent_to_responses = {item["intent"]: item["responses"] for item in intents}
-FEEDBACK_FILE = "data/feedback.csv"
 
+# Ensure feedback file exists
 if not os.path.exists(FEEDBACK_FILE):
     with open(FEEDBACK_FILE, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -68,15 +95,21 @@ if not os.path.exists(FEEDBACK_FILE):
 # Sidebar info panel
 # ========================
 st.sidebar.title("📊 Chatbot Info")
-st.sidebar.write(f"✅ Training Accuracy: **{train_acc:.2f}**")
-st.sidebar.write(f"✅ Testing Accuracy: **{test_acc:.2f}**")
 
-# Feedback count
+if train_acc is not None and test_acc is not None:
+    st.sidebar.write(f"✅ Training Accuracy: **{train_acc:.2f}**")
+    st.sidebar.write(f"✅ Testing Accuracy: **{test_acc:.2f}**")
+
 if os.path.exists(FEEDBACK_FILE):
     feedback_df = pd.read_csv(FEEDBACK_FILE)
     st.sidebar.write(f"📝 Feedback Collected: **{len(feedback_df)}** entries")
 else:
     st.sidebar.write("📝 Feedback Collected: **0** entries")
+
+# Retrain button
+if st.sidebar.button("🔄 Retrain Model"):
+    pipeline, le, train_acc, test_acc = retrain_model()
+    st.sidebar.success(f"Model retrained (Train={train_acc:.2f}, Test={test_acc:.2f})")
 
 # ========================
 # Custom CSS
@@ -153,14 +186,10 @@ if st.button("Send") and user_input.strip():
 # ========================
 # Display conversation
 # ========================
-
 for idx, chat in enumerate(st.session_state.messages):
-    # User bubble
     st.markdown(f"<div class='user-bubble'>🙋‍♂️ {chat['user']}</div>", unsafe_allow_html=True)
-    # Bot bubble
     st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']}</div>", unsafe_allow_html=True)
 
-    # Feedback buttons
     col1, col2 = st.columns(2)
     with col1:
         if st.button("👍 Helpful", key=f"yes_{idx}"):
@@ -176,6 +205,3 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
-
-
-
