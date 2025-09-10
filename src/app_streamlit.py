@@ -112,7 +112,7 @@ else:
     st.sidebar.write("📝 Feedback Collected: **0** entries")
 
 # Retrain button
-st.sidebar.button("🔄 Retrain Model"):
+st.sidebar.button("🔄 Retrain Model")
 pipeline, le, train_acc, test_acc = retrain_model()
 st.sidebar.success(f"Model retrained (Train={train_acc:.2f}, Test={test_acc:.2f})")
 
@@ -210,5 +210,6 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
 
 
