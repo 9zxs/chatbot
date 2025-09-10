@@ -120,9 +120,9 @@ st.markdown(
 # ========================
 tab1, tab2, tab3, tab4 = st.tabs(["💬 Chatbot", "📊 Info", "📥 Feedback Data", "📈 Evaluation"])
 
-# ========================
+# ------------------------
 # Tab 1: Chatbot
-# ========================
+# ------------------------
 with tab1:
     st.title("🎓 University Chatbot")
     st.markdown("Ask me about admissions, tuition, courses, and more.")
@@ -131,27 +131,48 @@ with tab1:
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # Input box
+    # Quick Questions
+    st.markdown("#### 🔘 Quick Questions")
+    quick_questions = [
+        "When is the application deadline?",
+        "How much is the tuition fee?",
+        "What courses are available?",
+        "Hello",
+        "Thanks",
+        "Goodbye"
+    ]
+    cols = st.columns(len(quick_questions))
+    for i, q in enumerate(quick_questions):
+        if cols[i].button(q):
+            user_input = q
+            # Predict intent
+            y_pred = pipeline.predict([user_input])[0]
+            intent = le.inverse_transform([y_pred])[0]
+            response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
+
+            # Add to session history
+            st.session_state.messages.append(
+                {"user": user_input, "bot": response, "intent": intent}
+            )
+
+    # Text input
     user_input = st.text_input("💬 Type your message here:")
 
     if st.button("Send") and user_input.strip():
-        # Predict intent + confidence
+        # Predict intent
         y_pred = pipeline.predict([user_input])[0]
         intent = le.inverse_transform([y_pred])[0]
-        proba = pipeline.predict_proba([user_input])[0]
-        confidence = float(max(proba))  # highest probability as confidence
-
         response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
 
         # Add to session history
         st.session_state.messages.append(
-            {"user": user_input, "bot": response, "intent": intent, "confidence": confidence}
+            {"user": user_input, "bot": response, "intent": intent}
         )
 
     # Display conversation
     for idx, chat in enumerate(st.session_state.messages):
         st.markdown(f"<div class='user-bubble'>🙋‍♂️ {chat['user']}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']} <br><small>🎯 Intent: {chat['intent']} | 🔍 Confidence: {chat['confidence']:.2f}</small></div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']}</div>", unsafe_allow_html=True)
 
         # Feedback buttons
         col1, col2 = st.columns(2)
@@ -159,13 +180,13 @@ with tab1:
             if st.button("👍 Helpful", key=f"yes_{idx}"):
                 with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                     writer = csv.writer(f)
-                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "yes"])
+                    writer.writerow([chat["user"], chat["intent"], "N/A", chat["bot"], "yes"])
                 st.success("Feedback recorded: Yes")
         with col2:
             if st.button("👎 Not Helpful", key=f"no_{idx}"):
                 with open(FEEDBACK_FILE, "a", newline="", encoding="utf-8") as f:
                     writer = csv.writer(f)
-                    writer.writerow([chat["user"], chat["intent"], f"{chat['confidence']:.2f}", chat["bot"], "no"])
+                    writer.writerow([chat["user"], chat["intent"], "N/A", chat["bot"], "no"])
                 st.error("Feedback recorded: No")
 
 # ------------------------
@@ -227,4 +248,5 @@ with tab4:
     plt.ylabel("True")
     plt.title("Confusion Matrix")
     st.pyplot(fig)
+
 
