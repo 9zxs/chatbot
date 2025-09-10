@@ -5,16 +5,16 @@ import random
 import json
 import csv
 import os
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import LabelEncoder
-from sklearn.model_selection import train_test_split
 
 # ========================
-# Page Config
+# Page config
 # ========================
-st.set_page_config(page_title="🎓 University Chatbot", page_icon="🤖")
+st.set_page_config(page_title="University Chatbot", page_icon="🤖")
 
 # ========================
 # Load dataset & train model
@@ -49,6 +49,20 @@ def load_and_train():
     return pipeline, le, train_acc, test_acc
 
 pipeline, le, train_acc, test_acc = load_and_train()
+
+# ========================
+# Load intents
+# ========================
+with open("data/intents.json", encoding="utf-8") as f:
+    intents = json.load(f)
+
+intent_to_responses = {item["intent"]: item["responses"] for item in intents}
+FEEDBACK_FILE = "data/feedback.csv"
+
+if not os.path.exists(FEEDBACK_FILE):
+    with open(FEEDBACK_FILE, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["user_input", "predicted_intent", "response", "feedback"])
 
 # ========================
 # Sidebar info panel
@@ -92,7 +106,6 @@ st.markdown(
         margin: 5px 0;
         text-align: left;
     }
-    /* Scrollbar */
     .chat-container::-webkit-scrollbar {
         width: 8px;
     }
@@ -126,25 +139,13 @@ if "messages" not in st.session_state:
 user_input = st.text_input("💬 Type your message here:")
 
 if st.button("Send") and user_input.strip():
-    # Predict intent + confidence
-    proba = pipeline.predict_proba([user_input])[0]
+    # Predict intent
     y_pred = pipeline.predict([user_input])[0]
-    confidence = max(proba)
     intent = le.inverse_transform([y_pred])[0]
 
-    # Apply confidence threshold
-    threshold = 0.30
-    if confidence < threshold or intent not in intent_to_responses:
-        response = random.choice([
-            "Sorry, I didn't quite get that.",
-            "Can you please rephrase?",
-            "I'm not sure I understand. Could you clarify?"
-        ])
-        intent = "fallback"
-    else:
-        response = random.choice(intent_to_responses[intent])
+    response = random.choice(intent_to_responses.get(intent, ["Sorry, I didn't understand that."]))
 
-    # Save to history
+    # Add to session history
     st.session_state.messages.append(
         {"user": user_input, "bot": response, "intent": intent}
     )
@@ -160,7 +161,7 @@ for idx, chat in enumerate(st.session_state.messages):
     # Bot bubble
     st.markdown(f"<div class='bot-bubble'>🤖 {chat['bot']}</div>", unsafe_allow_html=True)
 
-    # Feedback
+    # Feedback buttons
     col1, col2 = st.columns(2)
     with col1:
         if st.button("👍 Helpful", key=f"yes_{idx}"):
@@ -176,4 +177,5 @@ for idx, chat in enumerate(st.session_state.messages):
             st.error("Feedback recorded: No")
 
 st.markdown("</div>", unsafe_allow_html=True)
+
 
