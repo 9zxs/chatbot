@@ -408,7 +408,7 @@ with tab1:
             "intent": intent,
             "confidence": confidence
         })
-        st.session_state.user_input = ""
+        st.session_state.pop("input_text")
         st.rerun()
 
     # Conversation box with scrollbar
@@ -685,4 +685,5 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
