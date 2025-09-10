@@ -452,8 +452,10 @@ with tab1:
                     "confidence": confidence
                 })
                 
-                # Clear input and rerun
-                st.session_state.user_input = ""
+                # ✅ Safely clear input
+                if "user_input" in st.session_state:
+                    st.session_state.pop("user_input")
+
                 st.rerun()
             except Exception as e:
                 st.error(f"Error processing your message: {str(e)}")
@@ -759,5 +761,6 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
 
 
