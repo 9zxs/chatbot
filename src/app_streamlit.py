@@ -254,6 +254,48 @@ st.markdown("""
         border: none;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
+
+    .chat-container {
+        max-height: 400px;  /* Adjust height as needed */
+        overflow-y: auto;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+    .user-message {
+        background-color: #e6f2ff;
+        padding: 8px 12px;
+        border-radius: 10px;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    .bot-message {
+        background-color: #f1f0f0;
+        padding: 8px 12px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .metadata {
+        font-size: 12px;
+        color: gray;
+        margin-top: 4px;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+
+    .empty-state-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -730,3 +772,4 @@ with tab4:
     
     The chatbot learns from user feedback to improve its responses over time.
     """)
+
